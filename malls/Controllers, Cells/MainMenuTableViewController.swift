@@ -10,15 +10,15 @@ import UIKit
 class MainMenuTableViewController: UITableViewController {
     
 
-    let malls = [Malls(name: "Posnania", location: "Poznan", image: "posnania"),
-                 Malls(name: "King Cross", location: "Poznan", image: "kingcross"),
-                 Malls(name: "Galeria Malta", location: "Poznan", image: "malta"),
-                 Malls(name: "Avenida", location: "Poznan", image: "aveninda"),
-                 Malls(name: "Galeria A2", location: "Poznan", image: "a2"),
-                 Malls(name: "Galeria MM", location: "Poznan", image: "mm"),
-                 Malls(name: "Galeria Pestka", location: "Poznan", image: "pestka"),
-                 Malls(name: "Galeria Arkada", location: "Poznan", image: "arkady"),
-                 Malls(name: "Stary Browar", location: "Poznan", image: "stary browar")]
+    var malls = [Malls(name: "Posnania", location: "Poznan", imageTest: "posnania"),
+                 Malls(name: "King Cross", location: "Poznan", imageTest: "kingcross"),
+                 Malls(name: "Galeria Malta", location: "Poznan", imageTest: "malta"),
+                 Malls(name: "Avenida", location: "Poznan", imageTest: "aveninda"),
+                 Malls(name: "Galeria A2", location: "Poznan", imageTest: "a2"),
+                 Malls(name: "Galeria MM", location: "Poznan", imageTest: "mm"),
+                 Malls(name: "Galeria Pestka", location: "Poznan", imageTest: "pestka"),
+                 Malls(name: "Galeria Arkada", location: "Poznan", imageTest: "arkady"),
+                 Malls(name: "Stary Browar", location: "Poznan", imageTest: "stary browar")]
     
     
     override func viewDidLoad() {
@@ -36,14 +36,29 @@ class MainMenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
 
-        cell.nameLabel.text = malls[indexPath.row].name
-        cell.locationLabel.text = malls[indexPath.row].location
-        cell.imageOfMall.image = UIImage(named: malls[indexPath.row].image)
-        cell.imageOfMall?.layer.cornerRadius = cell.imageOfMall.frame.size.height / 2
-        cell.imageOfMall?.clipsToBounds = true
-
+        let mall = malls[indexPath.row]
+        cell.nameLabel.text = mall.name
+        cell.locationLabel.text = mall.location
+        
+        // which image do assign
+        if mall.image == nil {
+            cell.imageOfMall.image = UIImage(named: mall.imageTest!)
+        } else {
+            cell.imageOfMall.image = mall.image
+        }
+        
+        cell.imageOfMall.layer.cornerRadius = cell.imageOfMall.frame.size.height/2
+        cell.imageOfMall.clipsToBounds = true
         return cell
     }
     
-    @IBAction func cancelButton(_ segue: UIStoryboardSegue) {}
+    //save new value for  items
+    @IBAction func unwidSegue(_ segue: UIStoryboardSegue) {
+        
+        guard let newMallVC = segue.source as? NewMallController else { return }
+        
+        newMallVC.saveNewMall()
+        malls.append(newMallVC.newMall!)
+        tableView.reloadData()
+    }
 }

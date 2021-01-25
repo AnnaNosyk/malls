@@ -103,8 +103,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="250"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" translatesAutoresizingMaskIntoConstraints="NO" id="P97-LW-o1n">
-                                                    <rect key="frame" x="20" y="11" width="374" height="228"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="P97-LW-o1n">
+                                                    <rect key="frame" x="20" y="12.666666666666657" width="374" height="225"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -196,14 +196,24 @@
                     <navigationItem key="navigationItem" title="Add mall" id="lHE-Jn-hZJ">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Yvf-wj-1Jm">
                             <connections>
-                                <segue destination="OvI-cF-LiC" kind="unwind" unwindAction="cancelButton:" id="Zu4-wz-guA"/>
+                                <action selector="cancelAction:" destination="pgI-Uv-6Yn" id="kP5-zB-HiQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="2i4-NN-Veq"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="2i4-NN-Veq">
+                            <connections>
+                                <segue destination="Duq-7o-HH6" kind="unwind" unwindAction="unwidSegue:" id="xzb-Bj-Bvy"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageOfItem" destination="P97-LW-o1n" id="Vax-ye-seW"/>
+                        <outlet property="locationTextField" destination="6Bd-t5-VFq" id="0JL-g7-i1D"/>
+                        <outlet property="nameTextField" destination="8gB-uh-Sw3" id="OE8-nv-3Cg"/>
+                        <outlet property="saveBtn" destination="2i4-NN-Veq" id="fDn-ky-7IZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6OT-rT-GKl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="OvI-cF-LiC" userLabel="Exit" sceneMemberID="exit"/>
+                <exit id="Duq-7o-HH6" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2507" y="81"/>
         </scene>
@@ -248,7 +258,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="photo" width="512" height="319"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
