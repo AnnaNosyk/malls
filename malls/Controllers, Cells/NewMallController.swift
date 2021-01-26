@@ -8,7 +8,10 @@
 import UIKit
 
 class NewMallController: UITableViewController {
-    var newMall: Malls?
+   
+    
+    var imageIsChanged = false
+    
     @IBOutlet weak var imageOfItem: UIImageView!
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -64,10 +67,23 @@ class NewMallController: UITableViewController {
     
     func saveNewMall () {
         
-        newMall = Malls(name: nameTextField.text!,
-                        location: locationTextField.text,
-                        image: imageOfItem.image,
-                        imageTest: nil)
+        var image: UIImage?
+        
+        if imageIsChanged {
+            image = imageOfItem.image
+        } else {
+            image = UIImage(named: "mall")
+        }
+
+        let imageData = image?.pngData()
+        let newMall = Malls(name: nameTextField.text!,
+                            location: locationTextField.text,
+                            imageData: imageData)
+        
+        StorageManager.saveObject(newMall)
+ 
+        
+
     }
     
     

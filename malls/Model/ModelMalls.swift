@@ -3,13 +3,22 @@
 //  malls
 //
 //  Created by Anna Nosyk on 21.01.2021.
-//
-import UIKit
+//import RealmSwift
 
-struct Malls {
-    var name: String
-    var location: String?
-    var image: UIImage?
-    var imageTest: String?
+import RealmSwift
+
+class Malls: Object {
+@objc dynamic var name = ""
+@objc dynamic  var location: String?
+@objc dynamic var imageData: Data?
+
+    convenience init ( name: String, location: String?, imageData: Data?) {
+        self.init()
+        self.name = name
+        self.location = location
+        self.imageData = imageData
+        
+    }
+    
     
 }

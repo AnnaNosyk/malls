@@ -6,31 +6,25 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainMenuTableViewController: UITableViewController {
     
 
-    var malls = [Malls(name: "Posnania", location: "Poznan", imageTest: "posnania"),
-                 Malls(name: "King Cross", location: "Poznan", imageTest: "kingcross"),
-                 Malls(name: "Galeria Malta", location: "Poznan", imageTest: "malta"),
-                 Malls(name: "Avenida", location: "Poznan", imageTest: "aveninda"),
-                 Malls(name: "Galeria A2", location: "Poznan", imageTest: "a2"),
-                 Malls(name: "Galeria MM", location: "Poznan", imageTest: "mm"),
-                 Malls(name: "Galeria Pestka", location: "Poznan", imageTest: "pestka"),
-                 Malls(name: "Galeria Arkada", location: "Poznan", imageTest: "arkady"),
-                 Malls(name: "Stary Browar", location: "Poznan", imageTest: "stary browar")]
+    var malls: Results<Malls>!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        malls = realm.objects(Malls.self)
 
        
     }
 
-    // MARK: - Table view data source
+    // MARK: - tableView data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return malls.count
+        return malls.isEmpty ? 0 :  malls.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -39,18 +33,30 @@ class MainMenuTableViewController: UITableViewController {
         let mall = malls[indexPath.row]
         cell.nameLabel.text = mall.name
         cell.locationLabel.text = mall.location
-        
-        // which image do assign
-        if mall.image == nil {
-            cell.imageOfMall.image = UIImage(named: mall.imageTest!)
-        } else {
-            cell.imageOfMall.image = mall.image
-        }
-        
+        cell.imageOfMall.image = UIImage(data: mall.imageData!)
+       
         cell.imageOfMall.layer.cornerRadius = cell.imageOfMall.frame.size.height/2
         cell.imageOfMall.clipsToBounds = true
         return cell
     }
+    // MARK: - tableView Delegate
+
+    //delete rows
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    //delete rows from tableView and Database
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            
+            let mall = malls[indexPath.row]
+            StorageManager.deleteObject(mall)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
+    }
+
     
     //save new value for  items
     @IBAction func unwidSegue(_ segue: UIStoryboardSegue) {
@@ -58,7 +64,6 @@ class MainMenuTableViewController: UITableViewController {
         guard let newMallVC = segue.source as? NewMallController else { return }
         
         newMallVC.saveNewMall()
-        malls.append(newMallVC.newMall!)
         tableView.reloadData()
     }
 }
