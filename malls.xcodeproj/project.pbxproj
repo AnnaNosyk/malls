@@ -73,6 +73,7 @@
 		17203F3225B7347B00F83816 /* malls */ = {
 			isa = PBXGroup;
 			children = (
+				17203F4125B7347E00F83816 /* Info.plist */,
 				17203F3325B7347B00F83816 /* AppDelegate.swift */,
 				17203F3525B7347B00F83816 /* SceneDelegate.swift */,
 				17203F3925B7347B00F83816 /* Main.storyboard */,
@@ -89,7 +90,6 @@
 			children = (
 				17203F3E25B7347E00F83816 /* LaunchScreen.storyboard */,
 				17203F3C25B7347E00F83816 /* Assets.xcassets */,
-				17203F4125B7347E00F83816 /* Info.plist */,
 				17203F4825B7368000F83816 /* .gitignore */,
 			);
 			path = "Suporting files";

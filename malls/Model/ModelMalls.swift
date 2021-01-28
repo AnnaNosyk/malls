@@ -11,6 +11,7 @@ class Malls: Object {
 @objc dynamic var name = ""
 @objc dynamic  var location: String?
 @objc dynamic var imageData: Data?
+@objc dynamic var date = Date()
 
     convenience init ( name: String, location: String?, imageData: Data?) {
         self.init()
